@@ -313,10 +313,11 @@ public class GUI extends javax.swing.JFrame {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> rspns) {
                 System.out.println(rspns.body());
-                if(rspns.code() == 204)
-                    outputPanel.setText(outputPanel.getText()+"\n"+"Credential successfully stored!");
+                
+                if(rspns.code() == 200)
+                    outputPanel.setText(outputPanel.getText()+"\n"+"Message ID:"+rspns.body().message+" successfully stored!");
                 else
-                    outputPanel.setText(outputPanel.getText()+"\n"+"Credential couldnt be stored! Key already exists");
+                    outputPanel.setText(outputPanel.getText()+"\n"+"Message couldnt be stored! Incorrect hash!");
             }
             @Override
             public void onFailure(Call<ApiResponse> call, Throwable thrwbl) {
