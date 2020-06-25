@@ -77,7 +77,7 @@ public class GUI extends javax.swing.JFrame {
         msgValue = new javax.swing.JTextField();
         tagsValue = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
-        jTextField8 = new javax.swing.JTextField();
+        idValue = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jTextField9 = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
@@ -139,8 +139,13 @@ public class GUI extends javax.swing.JFrame {
         tagsValue.setText("tags ( separated by , )");
 
         jButton3.setText("GET /message/id");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
-        jTextField8.setText("id");
+        idValue.setText("id");
 
         jButton4.setText("GET /messages/tag");
 
@@ -177,7 +182,7 @@ public class GUI extends javax.swing.JFrame {
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
                                             .addGap(18, 18, 18)
-                                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(idValue, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(layout.createSequentialGroup()
                                             .addGap(25, 25, 25)
                                             .addComponent(msgValue, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -241,7 +246,7 @@ public class GUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton3)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(idValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(14, 14, 14)
@@ -328,6 +333,37 @@ public class GUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        
+        
+        Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl("http://localhost:3000/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+
+        Service service = retrofit.create(Service.class);
+        
+        
+        Call<ApiResponse> output = service.getMessage(this.xkeyHeader.getText(), this.xrouteHeader.getText(), this.xsignatureHeader.getText(), Integer.parseInt(this.idValue.getText()));
+        output.enqueue(new Callback<ApiResponse>(){
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> rspns) {
+                System.out.println(rspns.body());
+                
+                if(rspns.code() == 200)
+                    outputPanel.setText(outputPanel.getText()+"\n"+"Message ID:"+idValue.getText()+" content: "+rspns.body().message);
+                else
+                    outputPanel.setText(outputPanel.getText()+"\n"+"Message couldnt be fetched! Incorrect hash!");
+            }
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable thrwbl) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        }
+        );
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -366,6 +402,7 @@ public class GUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField credentialKey;
     private javax.swing.JTextField credentialSharedSecret;
+    private javax.swing.JTextField idValue;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -378,7 +415,6 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     private javax.swing.JTextField msgValue;
     private javax.swing.JTextPane outputPanel;

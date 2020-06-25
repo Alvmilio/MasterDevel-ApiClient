@@ -10,6 +10,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 
 
@@ -26,5 +27,9 @@ public interface Service {
     @Headers( "Content-Type: application/json" )
     @POST("api/message")
     Call<ApiResponse> postMessage(@Header("XKey") String xkeyHeader, @Header("XRoute") String xrouteHader, @Header("XSignature") String xsignatureHeader, @Body Message credential);
+
+    @GET("api/message/{id}")
+    Call<ApiResponse> getMessage(@Header("XKey") String xkeyHeader, @Header("XRoute") String xrouteHader, @Header("XSignature") String xsignatureHeader, @Path("id") int id);
+
 
 }
