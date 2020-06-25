@@ -23,7 +23,7 @@ Message 2:
 	CorrectHash: 5fbabd8f2ca4ea70f68abb890ad921b1783e1b417179aef566e88dc60f3ff7a4
 
 
-Message 3 With new Credential    Key MasterDevel3      SharedSecret: ClaveSecreta3
+Message 3 
 
 	Msg: PruebaIntermedia		Tags: c#,angular,ionic  	XHeader: /message
 	StringToHash:       X-Route:/message;msg:PruebaIntermedia;tags:c#,angular,ionic
@@ -41,7 +41,7 @@ Data fetch
 
 
 
-	ByTag
+	ByTag   With  Credential    Key MasterDevel3      SharedSecret: ClaveSecreta3
 
 	Tag:c#   		XHeader: /messages/<tag>
 	StringToHash:   X-Route:/messages/<tag>;tag:c#
