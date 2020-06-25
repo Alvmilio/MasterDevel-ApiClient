@@ -1,0 +1,51 @@
+Casos de prueba
+
+
+Credencial :  
+		
+		Key: MasterDevel       SharedSecret: ClaveSecreta
+
+		Key: MasterDevel2 		SharedSecret: ClaveSecreta
+
+		Key: MasterDevel3 		SharedSecret: ClaveSecreta3
+
+Message 1:
+
+	
+	Msg: Prueba1		Tags: nodejs,java,casa      XHeader: /message 
+	StringToHash:      X-Route:/message;msg:Prueba1;tags:nodejs,java,casa
+	CorrectHash: db9a4255de8ddee22a65ab005c28e778f6cc0c2b864db13adca5b0fe658fbd53
+
+Message 2:
+
+	Msg: PruebaIntermedia		Tags: c#,angular,ionic  	XHeader: /message
+	StringToHash:       X-Route:/message;msg:PruebaIntermedia;tags:c#,angular,ionic
+	CorrectHash: 5fbabd8f2ca4ea70f68abb890ad921b1783e1b417179aef566e88dc60f3ff7a4
+
+
+Message 3 With new Credential    Key MasterDevel3      SharedSecret: ClaveSecreta3
+
+	Msg: PruebaIntermedia		Tags: c#,angular,ionic  	XHeader: /message
+	StringToHash:       X-Route:/message;msg:PruebaIntermedia;tags:c#,angular,ionic
+	CorrectHash: 5fbabd8f2ca4ea70f68abb890ad921b1783e1b417179aef566e88dc60f3ff7a4
+
+
+Data fetch
+
+	ByID
+	
+
+	ID: 1 				XHeader: /message/<id>
+	StringToHash:     X-Route:/message/<id>;id:1
+	CorrectHash: 714d0ee30b5827b9e8b26a5f359810afdce40a9e2e973a1ed9544e676a80b125
+
+
+
+	ByTag
+
+	Tag:c#   		XHeader: /messages/<tag>
+	StringToHash:   X-Route:/messages/<tag>;tag:c#
+	CorrectHash: 4cb3144cb9937a43fe91b7c7201031f433621a678ad27dbb69b20922d1bef447
+
+
+
