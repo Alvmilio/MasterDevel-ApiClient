@@ -31,6 +31,8 @@ import java.nio.charset.Charset;
  X-Route:/message/<id>;id:1
  32118b230ddb9287814ad5fc915b1cf3121355a0c05fc6d496bb907a56dc2afe
  
+ X-Route:/message/<id>;id:2 
+ d06ee2423661de24ab82273eded459811086c37d7aac79a090ed6332d27bc9e4
  second message to insert
  *msg "master devel"
  * tags nodejs,java,api
@@ -41,10 +43,10 @@ import java.nio.charset.Charset;
  hash: 23750715f3b316434b4a7731e77c09cb7042a92bd708cba67753502799568520 
  *
  fetch by tag nodejs
- hash 862797943fd33cee1b66dc76e1c24228c3d9732e1c0a33a75e3c3f076d81ed71
+ hash 5b6dc187fff2818ed3127d395a65a8b153803f367d727b6d11c18bc14c04cd59
 
 fetch by tag hola
-hash 2a630ca3b5b517d0a99d3378b6c0a35baba87b49035576a72ca565ae926a3ee6
+hash ba220c616dcc79cba9ba16a945305ba5d732fdb4b017933ceeafd3a821296746
  
  * 
  * 
