@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import java.nio.charset.Charset;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import javax.swing.JOptionPane;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -79,7 +80,7 @@ public class GUI extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         idValue = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
-        jTextField9 = new javax.swing.JTextField();
+        tagValue = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
@@ -148,8 +149,13 @@ public class GUI extends javax.swing.JFrame {
         idValue.setText("id");
 
         jButton4.setText("GET /messages/tag");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
-        jTextField9.setText("tag");
+        tagValue.setText("tag");
 
         jScrollPane1.setViewportView(outputPanel);
 
@@ -171,7 +177,7 @@ public class GUI extends javax.swing.JFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jButton4)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(tagValue, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jLabel3)
                                 .addComponent(jLabel2)
                                 .addComponent(jLabel1)
@@ -252,7 +258,7 @@ public class GUI extends javax.swing.JFrame {
                         .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton4)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(tagValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(95, Short.MAX_VALUE))
         );
 
@@ -304,6 +310,10 @@ public class GUI extends javax.swing.JFrame {
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+
+        JOptionPane.showMessageDialog(null, "To post a meesage\n"
+                + "you MUST use XRoute header as follows : /message \n"
+                + "COPY IT AS SPECIFIED ABOVE!\n The id to filter by must be specified on the id input box", "Informacion", 1);
         
         Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("http://localhost:3000/")
@@ -335,7 +345,9 @@ public class GUI extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        
+        JOptionPane.showMessageDialog(null, "To obtain message by ID\n"
+                + "you MUST use XRoute header as follows : /message/<id> \n"
+                + "COPY IT AS SPECIFIED ABOVE!\n The id to filter by must be specified on the id input box", "Informacion", 1);
         
         Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("http://localhost:3000/")
@@ -363,6 +375,40 @@ public class GUI extends javax.swing.JFrame {
         }
         );
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        
+        JOptionPane.showMessageDialog(null, "To obtain messages by tag\n"
+                + "you MUST use XRoute header as follows : /messages/<tag> \n"
+                + "COPY IT AS SPECIFIED ABOVE!\n The tag to filter by must be specified on the tag input box", "Informacion", 1);
+        
+        
+        Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl("http://localhost:3000/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+
+        Service service = retrofit.create(Service.class);
+        
+        
+        Call<ApiResponse> output = service.getMessages(this.xkeyHeader.getText(), this.xrouteHeader.getText(), this.xsignatureHeader.getText(), this.tagValue.getText().trim());
+        output.enqueue(new Callback<ApiResponse>(){
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> rspns) {
+                System.out.println(rspns.body());
+                
+                if(rspns.code() == 200)
+                    outputPanel.setText(outputPanel.getText()+"\n"+"Fetched Messages: "+rspns.body().message);
+                else
+                    outputPanel.setText(outputPanel.getText()+"\n"+"Messages couldnt be fetched! Incorrect hash!");
+            }
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable thrwbl) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        }
+        );
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -415,9 +461,9 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JTextField msgValue;
     private javax.swing.JTextPane outputPanel;
+    private javax.swing.JTextField tagValue;
     private javax.swing.JTextField tagsValue;
     private javax.swing.JTextField xkeyHeader;
     private javax.swing.JTextField xrouteHeader;

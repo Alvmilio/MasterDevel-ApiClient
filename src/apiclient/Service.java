@@ -31,5 +31,9 @@ public interface Service {
     @GET("api/message/{id}")
     Call<ApiResponse> getMessage(@Header("XKey") String xkeyHeader, @Header("XRoute") String xrouteHader, @Header("XSignature") String xsignatureHeader, @Path("id") int id);
 
+    @GET("api/messages/{tag}")
+    Call<ApiResponse> getMessages(@Header("XKey") String xkeyHeader, @Header("XRoute") String xrouteHader, @Header("XSignature") String xsignatureHeader, @Path("tag") String tag);
 
+    
+    
 }
